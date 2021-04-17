@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'scm.wsgi.application'
 
 # 数据库密码
 # JLjnyhf4bf:X
+# JLjnyhf4bf:A
 
 DATABASES_DEV = {
     'default': {
@@ -106,7 +107,19 @@ DATABASES_DEV = {
         'PASSWORD':'12345678',
     }
 }
+
+DATABASES_REMOTE_DEV = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST':'localhost',
+        'PORT':'3306',
+        'NAME':'scm_dev',
+        'USER':'root',
+        'PASSWORD':'JLjnyhf4bf:A',
+    }
+}
 DATABASES = DATABASES_DEV
+# DATABASES = DATABASES_REMOTE_DEV
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

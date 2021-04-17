@@ -10,7 +10,7 @@ from aaBase.search import datas_to_table,table_to_datas
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):
     # 显示内容
-    list_display = ['id', 'name']
+    list_display = ['name','searchInterval','searchNum']
 
 
 # 专家种类

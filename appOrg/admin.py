@@ -8,7 +8,8 @@ from aaBase.search import table_to_datas,datas_to_table
 
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    # 展示内容
+    list_display = ['name', 'searchInterval', 'searchNum']
 
 class OrganizationForm(forms.ModelForm):
     class Meta():

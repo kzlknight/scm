@@ -104,7 +104,6 @@ class Article(models.Model):
         # 新对象，需要先保存以获得ID
         if not self.id:
             models.Model.save(self,*args,**kwargs)
-        print(self.articleType)
         # 维护文章
         # 1.站内文章
         if self.articleType == Article.ARTICLETYPE_INSIDE:
