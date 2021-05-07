@@ -1,0 +1,120 @@
+<style>
+    .table > tbody > tr:nth-child(2n+1) > td {
+        background-color: #FAFAFC !important;
+    }
+
+    .table > tbody > tr:nth-child(2n+1) > th {
+        background-color: #E8F2FF;
+    }
+
+    table tr > td:first-child {
+        padding-left: 20px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #222222;
+    }
+
+    .is-collected {
+        color: #4B91EA;
+    }
+
+    .no-collected {
+        color: darkgray;
+    }
+
+    .page-first *, .page-last * {
+        color: #0D6EFD;
+    }
+</style>
+<table class="table table-borderless">
+    <tr class="text-center">
+        <th>标题</th>
+        <th>行业</th>
+        <th>时间</th>
+        <th>来源</th>
+        <th>收藏</th>
+    </tr>
+    {% for article in articles %}
+        <tr>
+            <td class="text-left"><a href="{{ article.url }}">{{ article.title }}</a></td>
+            <td class="text-left">{{ article.keywords }}</td>
+            <td class="text-center">{{ article.publishDatetime }}</td>
+            <td class="text-center">{{ article.origin }}</td>
+            <td class="text-center"><a href="#"> <i class="bi bi-star-fill is-collected"></i> </a></td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+<script>
+    var search_page = function () {
+        var href = window.location.href;
+        page = document.getElementById('search_page').value;
+        page = Number(page)
+        if (isNaN(page) || page === 0) {
+            document.getElementById('search_page').value = '';
+            return false
+        }
+        console.log(page)
+        var page_pattern = new RegExp('page=[0-9]+', 'g');
+        if (page_pattern.test(href)) {
+            search_href = href.replace(page_pattern, 'page=' + page)
+        } else {
+            search_str = document.location.search
+            if (search_str) {
+                search_href = href + '&page=' + page
+                console.log(search_href)
+            } else {
+                search_href = href + '?page=' + page
+            }
+
+        }
+        window.location.href = search_href;
+
+    }
+</script>
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" aria-label="Previous" style="border: none;margin-right:10px;">
+                共 {{ page_data.num_pages }} 页
+            </a>
+        </li>
+        <li class="page-item {% if page_data.first.enable %}page-first{% else %}a-disable{% endif %}">
+            <a class="page-link" href="{{ page_data.first.url }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for mid in page_data.mids %}
+            {# enable==True,可以点击-->没有被点击 #}
+            {# enable==True,不可以点击-->已经被点击 #}
+            {% if mid.enable %}
+                <li class="page-item"><a class="page-link" href="{{ mid.url }}">{{ mid.name }}</a></li>
+            {% else %}
+                <li class="page-item active a-disable"><a class="page-link" href="{{ mid.url }}">{{ mid.name }}</a></li>
+            {% endif %}
+
+        {% endfor %}
+        <li class="page-item">
+            <a class="page-link {% if page_data.last.enable %}page-last{% else %}a-disable{% endif %}"
+               href="{{ page_data.last.url }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        <li class="page-item disabled" style="margin-left: 10px;margin-right:2px;">
+            <span class="page-link" style="border: none;">前往</span>
+        </li>
+        <li class="page-item">
+            <input id="search_page" type="text" class="page-link" style="width: 50px;color: #222222;text-align: center;"
+                   value="">
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="javascript:search_page()" style="color: #6C757D;border: none;margin-left: 2px;">
+                跳转
+            </a>
+        </li>
+    </ul>
+</nav>
+

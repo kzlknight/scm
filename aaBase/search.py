@@ -1,4 +1,4 @@
-from appArticle.models import Article
+from appArticle.models import OutsideArticle,PDFArticle,InsideArticle
 from django.db.models import Q
 import lxml.etree as le
 from aaBase.mymarkdown import mdHtml
@@ -39,7 +39,7 @@ def table_to_datas(md_text, titles=['index', 'title', 'url']):
         return ret_datas
 
 
-def search_article(search_text, rule, searchNum, order_bys=['-clickNum', '-collectNum', '-createDatetime']):
+def search_article(search_texts:list, rule, searchNum, order_bys=['-clickNum', '-collectNum', '-createDatetime']):
     """
     :param search_text:
     :param rule:
@@ -49,68 +49,79 @@ def search_article(search_text, rule, searchNum, order_bys=['-clickNum', '-colle
     """
     qf = Q()
     if rule.title:
-        qf = qf | Q(title__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(title__contains=st)
     if rule.content:
-        qf = qf | Q(content__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(content__contains=st)
     if rule.brief:
-        qf = qf | Q(brief__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(brief__contains=st)
     if rule.author:
-        qf = qf | Q(author__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(author__contains=st)
     if rule.origin:
-        qf = qf | Q(origin__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(origin__contains=st)
     if rule.keywords:
-        qf = qf | Q(keywords__contains=search_text)
+        for st in search_texts:
+            qf = qf | Q(keywords__contains=st)
 
     # 没有搜索文字
-    if not search_text:
+    if not search_texts:
         return []
     # 全部禁止
     if not (rule.title) and not (rule.content) and not (rule.brief) and not (rule.author) and not (
     rule.origin) and not (rule.keywords):
         return []
     else:
-        articles = Article.objects.filter(qf).order_by(*order_bys)
+        outsideArticles = OutsideArticle.objects.filter(qf).order_by(*order_bys)
+        pdfArticles = PDFArticle.objects.filter(qf).order_by(*order_bys)
+        insideArticles = InsideArticle.objects.filter(qf).order_by(*order_bys)
+
         searchDatas = []
-        for index, article in enumerate(articles[0:searchNum]):
-            url = article.url
-            title = article.title
-            searchDatas.append(
-                {
-                    'index': index + 1,
-                    'title': title,
-                    'url': url,
-                }
-            )
-        return searchDatas
+        articles_objs = [outsideArticles,pdfArticles,insideArticles]
+        for articles in articles_objs:
+            for index, article in enumerate(articles):
+                url = article.url
+                title = article.title
+                searchDatas.append(
+                    {
+                        'index': index + 1,
+                        'title': title,
+                        'url': url,
+                    }
+                )
+        return searchDatas[0:searchNum]
 
-def search_article_new(searchNum=10):
-    articles = Article.objects.all().order_by('-createDatetime')
-    searchDatas = []
-    for index, article in enumerate(articles[0:searchNum]):
-        url = article.url
-        title = article.title
-        searchDatas.append(
-            {
-                'index': index + 1,
-                'title': title,
-                'url': url,
-            }
-        )
-    return searchDatas
-
-def search_article_hot(searchNum=10):
-    articles = Article.objects.all().order_by('-clickNum')
-    searchDatas = []
-    for index, article in enumerate(articles[0:searchNum]):
-        url = article.url
-        title = article.title
-        searchDatas.append(
-            {
-                'index': index + 1,
-                'title': title,
-                'url': url,
-            }
-        )
-    return searchDatas
+# def search_article_new(searchNum=10):
+#     articles = Article.objects.all().order_by('-createDatetime')
+#     searchDatas = []
+#     for index, article in enumerate(articles[0:searchNum]):
+#         url = article.url
+#         title = article.title
+#         searchDatas.append(
+#             {
+#                 'index': index + 1,
+#                 'title': title,
+#                 'url': url,
+#             }
+#         )
+#     return searchDatas
+#
+# def search_article_hot(searchNum=10):
+#     articles = Article.objects.all().order_by('-clickNum')
+#     searchDatas = []
+#     for index, article in enumerate(articles[0:searchNum]):
+#         url = article.url
+#         title = article.title
+#         searchDatas.append(
+#             {
+#                 'index': index + 1,
+#                 'title': title,
+#                 'url': url,
+#             }
+#         )
+#     return searchDatas
 
 

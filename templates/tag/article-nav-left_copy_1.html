@@ -1,0 +1,46 @@
+<style>
+    .list-group, .list-group li {
+        border: none;
+        text-align: left;
+    }
+
+    .list-group-item a {
+        text-decoration: none;
+        color: #222222;
+    }
+
+    .list-group .my-level2 {
+        position: relative;
+        left: 18px;
+    }
+
+    .list-group .my-level1 {
+        margin: 5px 0;
+    }
+
+    .list-group-item i {
+        display: inline-block;
+        width: 14px;
+        color: black;
+        margin: 0;
+        padding: 0;
+    }
+
+</style>
+<ul class="list-group">
+    <li class="list-group-item my-level1"><i class="bi bi-book"></i><a href="#"> 外网节选 </a>
+    </li>
+    {% for category in outsideCategorys %}
+        {#        <li class="list-group-item my-level2"><a class="choose" href="#">A third item</a></li>#}
+        <li class="list-group-item my-level2"><a class="choose" href="{{ category.url }}">{{ category.name }}</a></li>
+    {% endfor %}
+    <li class="list-group-item my-level1"><i class="bi bi-book"></i><a href="#"> PDF精选 </a>
+    </li>
+    {% for category in pdfsideCategorys %}
+        <li class="list-group-item my-level2"><a class="choose" href="{{ category.url }}">{{ category.name }}</a></li>
+    {% endfor %}
+    <li class="list-group-item my-level1"><i class="bi bi-book"></i><a href="#"> 站内文章 </a> </li>
+    {% for category in insideCategorys %}
+        <li class="list-group-item my-level2"><a class="choose" href="{{ category.url }}">{{ category.name }}</a></li>
+    {% endfor %}
+</ul>

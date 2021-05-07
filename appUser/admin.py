@@ -1,9 +1,9 @@
 from django.contrib import admin
-from appUser.models import User
+from appUser.models import WebUser
 
 # Register your models here.
 
-@admin.register(User)
+@admin.register(WebUser)
 class UserAdmin(admin.ModelAdmin):
     # 显示字段
     list_display = ['name','account','tel','createDatetime']

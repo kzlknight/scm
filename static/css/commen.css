@@ -1,0 +1,74 @@
+/*重写样式*/
+html, body {
+    height: 100%;
+}
+
+body {
+    min-width: 1320px !important;
+    background-color: red;
+}
+
+* {
+    font-size: 14px;
+}
+
+body {
+    background-color: rgba(248, 248, 249, 1);
+}
+
+/*模块拆分*/
+#header, #nav-left, #nav-top, #content {
+    background-color: #FFFFFF;
+}
+
+#header {
+    height: 60px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 10;
+}
+
+#nav-left {
+    position: fixed;
+    width: 150px;
+    display: block;
+    top: 75px;
+    bottom: 10px;
+    overflow: hidden;
+}
+
+#article {
+    margin: auto;
+    width: 1300px;
+    position: relative;
+    top: 60px;
+}
+
+#main {
+    position: relative;
+    left: 165px;
+    width: 1135px;
+    top: 15px;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+* {
+    color: #222222;
+}
+
+.a-disable, .a-disable * {
+    pointer-events: none;
+}
+
+.disable-color, .disable-color * {
+    color: #69727A;
+}
+
+

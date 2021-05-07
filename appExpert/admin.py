@@ -102,3 +102,7 @@ class ExpertAdmin(admin.ModelAdmin):
 
     show_brief.short_description = '专家简介'
 
+    # 通过Admin保存的专家，重置更新时间
+    def save_model(self, request, expert, form, change):
+        expert.searchDatetime = None
+        expert.save()

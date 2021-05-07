@@ -1,0 +1,148 @@
+{% load tag_article %}
+
+<style>
+    .book-content {
+        padding: 10px 20px;
+    }
+
+    /*img*/
+    .book-content img {
+        padding: .25rem;
+        background-color: #fff;
+        border: 1px solid #F6F6F2;
+        border-radius: .25rem;
+        max-width: 100%;
+        height: auto
+    }
+
+    .book-content ol li {
+        list-style: decimal;
+    }
+
+    .book-content ul li {
+        list-style: disc;
+    }
+
+    .book-content h1 {
+        font-size: 20px !important;
+        margin-bottom: 16px;
+        margin-top: 16px;
+        font-weight: 700;
+    }
+
+    .book-content h2 {
+        font-size: 18px !important;
+        margin-bottom: 14px;
+        margin-top: 16px;
+        font-weight: 600;
+    }
+
+    .book-content h3 {
+        font-size: 16px !important;
+        margin-bottom: 14px;
+        margin-top: 16px;
+        font-weight: 600;
+    }
+
+    .book-content h4 {
+        font-size: 14px !important;
+        margin-bottom: 10px;
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .book-content h5 {
+        font-size: 14px !important;
+        margin-bottom: 10px;
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .book-content h6 {
+        font-size: 14px !important;
+        margin-bottom: 10px;
+        margin-top: 12px;
+        font-weight: 600;
+    }
+
+    .book-content p, .book-content li {
+        line-height: 24px !important;
+        margin-bottom: 6px;
+        margin-top: 6px;
+    }
+
+    .book-content ol {
+        list-style: decimal !important;
+        list-style-position: outside !important;
+        position: relative;
+        left: 10px;
+    }
+
+    .book-content ul {
+        list-style: square !important;
+        list-style-position: outside !important;
+        position: relative;
+        left: 10px;
+    }
+
+    pre code {
+        font-family: Menlo, Monaco, Consolas, "Andale Mono", "lucida console", "Courier New", monospace;
+        line-height: 1.4 !important;
+    }
+
+    pre {
+    {#background-image: url("/static/img/grain_light.png");#} background-color: whitesmoke;
+        border: 3px solid #dddddd;
+        padding: 10px;
+    }
+
+    #book-content-header {
+        background-color: whitesmoke;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    #book-content-header > span {
+        margin-right: 25px;
+        {#background-color: whitesmoke;#}
+    }
+</style>
+
+<div class="book-content">
+    <h1>{{ expert.name }}</h1>
+    <div>
+        <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">专家：{{ expert.name }}</span>
+    </div>
+    <div>
+        <img style="max-width: 200px;max-height: 200px;min-width: 150px;" src="/media/{{ expert.ppicture }}" alt="">
+    </div>
+    <div>
+        <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">简介：</span>
+        <p>{{ expert.brief }}</p>
+    </div>
+    <div>
+        <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">详细：</span>
+        <div>
+            {{ expert.content|mark }}
+        </div>
+    </div>
+    <div>
+        <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">相关文章：</span>
+        <ol>
+            {% for searchResultData in searchResultDatas %}
+                <li>
+                    <a href="{{ searchResultData.url }}"> {{ searchResultData.title }} </a>
+                </li>
+            {% endfor %}
+        </ol>
+
+    </div>
+    <div id="book-content-header"> </div>
+</div>
+<script>
+    var tables = document.getElementsByTagName('table');
+    for (var i = 0; i < tables.length; i++) {
+        tables[i].classList.add('table')
+        tables[i].classList.add('table-striped')
+    }
+</script>

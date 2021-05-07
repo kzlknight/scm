@@ -1,0 +1,96 @@
+<style>
+    .navbar {
+        position: relative;
+        top: -5px;
+        height: 70px;
+        text-align: center;
+        width: 1300px;
+        margin: auto;
+    }
+
+    /*搜索下拉框*/
+    .my-search-select {
+        width: 80px;
+        margin-right: 5px;
+    }
+
+    /*搜索按钮*/
+    .my-search-button {
+        position: relative;
+        left: -10px;
+    }
+
+    /*搜索输入框*/
+    .my-search-input {
+        width: 180px;
+    }
+
+
+    /*点击后导航*/
+    .my-nav-active, .my-nav-active * {
+        color: #4B91EA !important;
+
+    }
+
+    .my-nav-active {
+        border-bottom: 2px solid #4B91EA;
+    }
+
+
+</style>
+
+<nav class="navbar navbar-expand navbar-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <img src="img/hanghangcha_logo.png" style="width: 80px;"></a>
+                </li>
+                <li class="nav-item my-nav-active">
+                    <a class="nav-link" href="#">行业研究</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">创业投资</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">证券研究</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">相关阅读</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">专家栏目</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        机构栏目
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">机构1</a></li>
+                        <li><a class="dropdown-item" href="#">机构2</a></li>
+                        <li><a class="dropdown-item" href="#">机构3</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <select class="form-select my-search-select">
+                    <option selected value="1">全文</option>
+                    <option value="2">标题</option>
+                </select>
+                <input class="form-control me-2 my-search-input" type="search" placeholder="" aria-label="Search">
+
+                <button class="btn my-search-button " type="submit" style="position:relative;left:-10px;"><i
+                        class="bi bi-search btn-outline-secondary"></i></button>
+            </form>
+            <form class="d-flex">
+                <button type="button" class="btn btn-outline-primary">登录</button>
+            </form>
+
+<!--            <span class="d-flex">-->
+<!--                <button type="button" class="btn"> 用户：xxxx </button>-->
+<!--            </span>-->
+        </div>
+    </div>
+</nav>

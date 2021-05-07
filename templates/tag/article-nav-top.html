@@ -1,0 +1,90 @@
+<style>
+    .mynav2 * {
+        font-size: 13px;
+        text-align: left;
+    }
+
+    .mynav2-wrapper {
+        padding: 20px;
+    }
+
+    /* 分类类别的样式 */
+    .type-label {
+        line-height: 28px;
+        width: 65px;
+        text-align: left;
+        margin-right: 5px;
+        vertical-align: top;
+    }
+
+    /* 分类内容包裹div */
+    .screen-item-box {
+        max-width: 960px;
+        line-height: 30px;
+        display: inline-block;
+    }
+
+    /* 分类内容标签 */
+    .choice-btn {
+        padding: 0 15px;
+        white-space: nowrap;
+        line-height: 28px;
+    }
+
+    .choice-btn a {
+        text-decoration: none;
+        color: #222222;
+    }
+
+    /*被选择的内容标签*/
+    .choose {
+        color: #4B91EA !important;
+    }
+
+    /* 不限按钮样式 */
+    .btn-nolimited {
+        position: relative;
+        top: -2px;
+        padding: 0 11px;
+        line-height: 18px;
+    }
+
+
+</style>
+
+<div class="mynav2">
+    <div class="mynav2-wrapper">
+        <div>
+            <span class="type-label">行业分类:</span>
+            <div class="screen-item-box">
+                {% for keyword in nav_top_data.keywords %}
+                    <span class="choice-btn"><a class="{% if keyword.clicked %}choose a-disable{% endif %}" href="{{ keyword.url }}">{{ keyword.name }}</a> </span>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <span class="type-label">发布时间:</span>
+            <div class="screen-item-box">
+                {% for year in nav_top_data.years %}
+                    <span class="choice-btn"><a class="{% if year.clicked %}choose a-disable{% endif %}" href="{{ year.url }}">{{ year.name }}</a></span>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <span class="type-label">排序规则:</span>
+            <div class="screen-item-box">
+                {% for order_by in nav_top_data.order_bys %}
+                    <span class="choice-btn"><a class="{% if order_by.clicked %}choose a-disable{% endif %}" href="{{ order_by.url }}">{{ order_by.name }}</a></span>
+                {% endfor %}
+            </div>
+        </div>
+        {#        <div>#}
+        {#            <span class="type-label">文章种类:</span>#}
+        {#            <div class="screen-item-box">#}
+        {#                <span class="choice-btn"><a href="#">站外文章</a></span>#}
+        {#                <span class="choice-btn"><a href="#">站内文章</a></span>#}
+        {#                <span class="choice-btn"><a href="#">PDF</a></span>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+</div>

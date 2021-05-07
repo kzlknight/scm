@@ -25,7 +25,7 @@ SECRET_KEY = 'aq+6#3q6==cfe0%&sbdnc%1%$y7rkn+02k-iz4(jy*un91th2k'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -52,10 +52,7 @@ INSTALLED_APPS = [
     'mdeditor',
 ]
 
-# djagno-mdeditor
-X_FRAME_OPTIONS = 'SAMEORIGIN'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
-MEDIA_URL = '/media/'
+
 
 
 MIDDLEWARE = [
@@ -66,6 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.middleware.ContextMiddleware'
 ]
 
 ROOT_URLCONF = 'scm.urls'
@@ -158,10 +156,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+#
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
+
+STATIC_ROOT=os.path.join(BASE_DIR,"/static")#正确
+
+# djagno-mdeditor
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
+MEDIA_URL = '/media/'
 
 CORS_ORIGIN_ALLOW_ALL  = True # 跨域问题
 

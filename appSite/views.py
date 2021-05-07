@@ -23,4 +23,7 @@ class NavModelView(viewsets.ModelViewSet):
         return self.queryset
 
 
+def page_not_found(request,exception):
+    return HttpResponse('aaa')
+
 

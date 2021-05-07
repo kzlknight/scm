@@ -55,6 +55,10 @@ class OrganizationAdmin(admin.ModelAdmin):
 
     show_brief.short_description = '机构简介'
 
+    # 通过Admin保存的机构，重置更新时间
+    def save_model(self, request, organization, form, change):
+        organization.searchDatetime = None
+        organization.save()
 
 
 

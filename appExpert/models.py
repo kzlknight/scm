@@ -87,7 +87,7 @@ class Expert(models.Model):
     position = models.PositiveSmallIntegerField(default=1, verbose_name='位置')
     ppicture = models.ImageField(upload_to=upload_ppicture, null=True, blank=True, verbose_name='专家头像')
     content = MDTextField(null=True, blank=True, verbose_name='基本信息')
-    searchKeyword = models.CharField(max_length=255,null=True,blank=True,verbose_name='搜索关键字')
+    searchKeywords = models.CharField(max_length=255,null=True,blank=True,verbose_name='搜索关键字')
     searchResult = MDTextField(null=True, blank=True, verbose_name='检索结果',default=SEARCHRESULT_DEFAULT)
     searchNum = models.IntegerField(default=None, null=True, blank=True, verbose_name='搜索数量')  # 优先级高于RULE
     searchDatetime = models.DateTimeField(null=True, blank=True, verbose_name='搜索更新时间')
@@ -116,12 +116,18 @@ class Expert(models.Model):
             searchInterval = rule.searchInterval  # 更新时间间隔
             # 无更新时间或者应该被更新
             if not self.searchDatetime or self.searchDatetime + datetime.timedelta(
-                    hours=searchInterval) >= now():  # 超时时间未更新
+                    hours=searchInterval) <= now():  # 超时时间未更新
+                # 处理search_texts
+                if not self.searchKeywords:
+                    search_texts = []
+                else:
+                    search_texts = self.searchKeywords.split(',')
                 searchDatas: str = search_article(
-                    search_text=self.searchKeyword,
+                    search_texts=search_texts,
                     rule=rule,
                     searchNum=self.searchNum or rule.searchNum,
                 ) # [{index:"",title:"",url:""},]
+                print(searchDatas)
                 self.searchResult = datas_to_table(searchDatas) # 把搜索的结果变成markdown的table
                 self.searchDatetime = now()
             else: pass # 需要更新但为到更新时间

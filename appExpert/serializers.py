@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from appExpert.models import Category, Expert, Rule
-from appArticle.models import Article
+from appArticle.models import OutsideArticle,PDFArticle,InsideArticle
 from aaBase.mymarkdown import mdHtml
 from aaBase.search import table_to_datas, datas_to_table
 from aaBase.search import search_article

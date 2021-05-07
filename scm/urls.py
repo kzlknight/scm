@@ -21,16 +21,24 @@ from django.conf import settings
 urlpatterns = [
     path(r'mdeditor/', include('mdeditor.urls')),
     path('admin/', admin.site.urls),
-    path('api/appArticle/', include('appArticle.urls', namespace='appArticle'), ),
-    path('api/appExpert/', include('appExpert.urls', namespace='appExpert'), ),
-    path('api/appOrg/', include('appOrg.urls', namespace='appOrg'), ),
-    path('api/appSite/', include('appSite.urls', namespace='appSite'), ),
-    path('api/appUser/', include('appUser.urls', namespace='appUser'), ),
-    path('t/', include('appTest.urls', )), # 测试接口
-    path('', include('app_temp.tempUrls', namespace='app_temp')),
+    path('', include('appArticle.urls', namespace='appArticle'), ),
+    path('', include('appExpert.urls', namespace='appExpert'), ),
+    path('', include('appOrg.urls', namespace='appOrg'), ),
+
+    # path('api/appArticle/', include('appArticle.urls', namespace='appArticle'), ),
+    # path('api/appExpert/', include('appExpert.urls', namespace='appExpert'), ),
+    # path('api/appOrg/', include('appOrg.urls', namespace='appOrg'), ),
+    # path('api/appSite/', include('appSite.urls', namespace='appSite'), ),
+    # path('api/appUser/', include('appUser.urls', namespace='appUser'), ),
+    # path('t/', include('appTest.urls', )), # 测试接口
+    # path('', include('app_temp.tempUrls', namespace='app_temp')),
 
 
 ]
+
+from appSite.views import page_not_found
+
+handler404 = page_not_found
 
 # mdeditor
 if settings.DEBUG:
