@@ -67,7 +67,3 @@ class OrgListTool():
 
         return ret_data
 
-
-
-
-

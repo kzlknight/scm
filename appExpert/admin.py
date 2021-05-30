@@ -9,8 +9,11 @@ from aaBase.search import datas_to_table,table_to_datas
 # 专家检索规则 注：专家检索规则有一个即可
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):
-    # 显示内容
-    list_display = ['name','searchInterval','searchNum']
+    # 展示内容
+    list_display = ['searchInterval','searchNum','title','content','brief','author','origin','keywords']
+    # 修改
+    list_editable = ['searchInterval','searchNum','title','content','brief','author','origin','keywords']
+
 
 
 # 专家种类

@@ -4,6 +4,7 @@ import urllib.parse as up
 
 from appArticle.models import OutsideCategory,PDFCategory,InsideCategory
 from appArticle.models import OutsideArticle,PDFArticle,InsideArticle
+from appArticle.models import NavLeft
 
 from aaBase.urlsmapping import UrlMapping as UM
 
@@ -73,3 +74,44 @@ class PDFArticleAdmin(ArticleAdmin):
 @admin.register(InsideArticle)
 class InsideArticleAdmin(ArticleAdmin):
     pass
+
+
+class NavLeftForm(forms.ModelForm):
+    class Meta():
+        model = NavLeft
+        fields = '__all__'
+
+    def clean(self):
+        '''
+
+        '''
+        superNav = self.cleaned_data.get('superNav')
+        level = self.cleaned_data.get('level')
+
+        if superNav and level != NavLeft.LEVEL_2:
+            raise forms.ValidationError('存在父级导航，需要为二级标题')
+        return self.cleaned_data
+
+
+@admin.register(NavLeft)
+class NavLeftAdmin(admin.ModelAdmin):
+    form = NavLeftForm
+    search_fields = ['name']
+    list_display = ['id', 'name', 'position', 'url', 'level', 'show_subNavs', 'superNav']
+    list_filter = ['level']
+    list_editable = ['name', 'position', 'url', 'level', 'superNav']
+    list_per_page = 20
+
+
+    ordering = ['level', 'position', 'id']
+
+    def show_subNavs(self, nav):
+        names = []
+        for n in nav.subNavs.all():
+            names.append(n.name)
+        return ','.join(names)
+
+
+
+
+    show_subNavs.short_description = '下级'

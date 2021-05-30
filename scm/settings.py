@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # APP
-    'app_temp.apps.AppTempConfig',
     'appSite.apps.AppsiteConfig',
     'appArticle.apps.AppbookConfig',
     'appExpert.apps.AppexpertConfig',
@@ -116,6 +115,8 @@ DATABASES_REMOTE_DEV = {
         'PASSWORD':'JLjnyhf4bf:A',
     }
 }
+
+# DATABASES = DATABASES_REMOTE_DEV
 DATABASES = DATABASES_DEV
 # DATABASES = DATABASES_REMOTE_DEV
 
@@ -156,17 +157,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-#
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static')
 ]
 
-STATIC_ROOT=os.path.join(BASE_DIR,"/static")#正确
+# STATIC_ROOT=os.path.join(BASE_DIR,"/static")#collect static使用
 
 # djagno-mdeditor
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+# MEDIA_ROOT = 'uploads'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 MEDIA_URL = '/media/'
+STATIC_ROOT = 'static'
 
 CORS_ORIGIN_ALLOW_ALL  = True # 跨域问题
 

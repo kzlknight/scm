@@ -1,0 +1,29 @@
+{% extends 'temp.html' %}
+
+{% load tag_site %}
+{% load tag_article %}
+
+{% block title %}404{% endblock %}
+
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+
+    <div id="article">
+        <div id="nav-left">
+            {% tag_ArticleNavLeft %}
+        </div>
+        <div id="main">
+            <div id="content">
+                <div style="margin: auto;">
+                    <img src="/static/img/404.png" alt="" style="width: 500px;">
+                    <h2>
+                        啊哦，你想要的页面离你而去了哦
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

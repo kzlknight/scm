@@ -28,26 +28,26 @@ if __name__ == '__main__':
     keywordstag3 = ['Excel', '神策', 'QuickBI', 'Tableau', 'PowerBi', '统计学', 'Python', 'SPSS']
     keywordstag4 = ['Django', 'Flask', 'Tornado', 'Bottle', 'Vue', 'Bootstrap', 'JQuery', 'CSS']
 
-    oc1 = OutsideCategory(name='外部文章1',keywordsTag=','.join(keywordstag1))
-    oc2 = OutsideCategory(name='外部文章2',keywordsTag=','.join(keywordstag2))
-    pc = PDFCategory(name='PDF文章',keywordsTag=','.join(keywordstag3))
-    ic = InsideCategory(name='内部文章',keywordsTag=','.join(keywordstag4))
+    oc1 = OutsideCategory(name='企业创新',keywordsTag=','.join(keywordstag1))
+    oc2 = OutsideCategory(name='企业管理',keywordsTag=','.join(keywordstag2))
+    pc = PDFCategory(name='互联网金融',keywordsTag=','.join(keywordstag3))
+    ic = InsideCategory(name='文化展览',keywordsTag=','.join(keywordstag4))
 
     oc1.save()
     oc2.save()
     pc.save()
     ic.save()
 
-    navOut = Nav(name='外部文章',position=1,level=Nav.LEVEL_1)
+    navOut = Nav(name='社会知识(外部)',position=1,level=Nav.LEVEL_1)
     navOut.save()
 
-    navOut1 = Nav(name='外部文章1',url=oc1.url,position=1,level=Nav.LEVEL_2,superNav=navOut)
-    navOut2 = Nav(name='外部文章2',url=oc2.url,position=2,level=Nav.LEVEL_2,superNav=navOut)
+    navOut1 = Nav(name='企业创新',url=oc1.url,position=1,level=Nav.LEVEL_2,superNav=navOut)
+    navOut2 = Nav(name='企业管理',url=oc2.url,position=2,level=Nav.LEVEL_2,superNav=navOut)
     navOut1.save()
     navOut2.save()
 
-    navPdf = Nav(name='PDF文章',url=pc.url,position=2,level=Nav.LEVEL_1)
-    navInside = Nav(name='内部文章',url=ic.url,position=3,level=Nav.LEVEL_1)
+    navPdf = Nav(name='金融(PDF)',url=pc.url,position=2,level=Nav.LEVEL_1)
+    navInside = Nav(name='文化(内部）',url=ic.url,position=3,level=Nav.LEVEL_1)
     navPdf.save()
     navInside.save()
 
@@ -57,8 +57,6 @@ if __name__ == '__main__':
     in_datas = json.load(open('spider/inside1.json','r'))
 
     for data in out1_datas:
-        # data['outlink'] = data['href']
-        # del data['href']
         try:
             OutsideArticle(category=oc1,**data).save()
             print('yes')
@@ -66,14 +64,11 @@ if __name__ == '__main__':
             print('no')
 
     for data in out2_datas:
-        # data['outlink'] = data['href']
-        # del data['href']
         try:
             OutsideArticle(category=oc2,**data).save()
             print('yes')
         except:
             print('no')
-
 
     for data in pdf_datas:
         del data['outlink']

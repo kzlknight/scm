@@ -1,0 +1,51 @@
+{% extends 'tags/list_content.html' %}
+
+{% load tag_org %}
+
+{% block content %}
+    <style>
+        .card {
+            display: inline-block;
+            width: 259px !important;
+            margin: 8px;
+        }
+
+
+        .card li {
+            border: none;
+            text-align: left;
+        }
+
+        .float-right {
+            float: right;
+        }
+
+        .float-left {
+            float: left;
+        }
+    </style>
+    <div style="margin:auto;padding: 10px;">
+        {% for org in orgs %}
+            <div class="card">
+                <div class="card-header">
+                <span class="float-left">
+                    <a href="{{ org.url }}"> {{ org.name }} </a>
+                </span>
+                    <span class="float-right">
+                    <a class="text-blue" href="{{ org.url }}"> 更多 </a>
+                </span>
+                    <div class="clearfix"></div>
+                </div>
+                <ol class="list-group list-group-flush">
+                    {% for data in org.searchResult|table_to_datas:10 %}
+                        <li class="list-group-item content-brief">
+                            <a href="{{ data.url }}"> {{ data.index }}.{{ data.title }} </a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'tags/pagination.html' %}
+{% endblock %}
+

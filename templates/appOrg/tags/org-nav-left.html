@@ -1,0 +1,15 @@
+{% extends 'tags/nav-left.html' %}
+
+{% block content %}
+    <ul class="list-group">
+        {% for org in orgs %}
+            <li class="list-group-item my-level2 content-brief">
+                {% if org.url in full_path %}
+                    <a class="choose" href="{{ org.url }}">{{ org.name }}</a>
+                {% else %}
+                    <a href="{{ org.url }}">{{ org.name }}</a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'tags/detal-content.html' %}
+{% load tag_article %}
+
+{% block content %}
+    <style>
+        #book-content-header {
+            background-color: whitesmoke;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        #book-content-header > span {
+            margin-right: 25px;
+        }
+    </style>
+    <div class="book-content">
+        <h1>{{ expert.name }}</h1>
+        <div>
+            <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">专家：{{ expert.name }}</span>
+        </div>
+        <div>
+            <img style="max-width: 200px;max-height: 200px;min-width: 150px;" src="/media/{{ expert.ppicture }}" alt="">
+        </div>
+        <div>
+            <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">简介：</span>
+            <p>{{ expert.brief }}</p>
+        </div>
+        <div>
+            <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">详细：</span>
+            <div>
+                {{ expert.content|mark }}
+            </div>
+        </div>
+        <div>
+            <span style="border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">相关文章：</span>
+            <ol>
+                {% for searchResultData in searchResultDatas %}
+                    <li>
+                        <a href="{{ searchResultData.url }}"> {{ searchResultData.title }} </a>
+                    </li>
+                {% endfor %}
+            </ol>
+
+        </div>
+        <div id="book-content-header"></div>
+    </div>
+    <script>
+        var tables = document.getElementsByTagName('table');
+        for (var i = 0; i < tables.length; i++) {
+            tables[i].classList.add('table')
+            tables[i].classList.add('table-striped')
+        }
+    </script>
+{% endblock %}

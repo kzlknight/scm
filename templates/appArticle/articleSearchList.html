@@ -1,0 +1,24 @@
+{% extends 'temp.html' %}
+
+{% load tag_site %}
+{% load tag_article %}
+
+{% block title %}搜索"{{ keyword }}"的结果{% endblock %}
+
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+
+    <div id="article">
+        <div id="nav-left">
+            {% include 'appArticle/tags/article-search-nav-left.html' %}
+        </div>
+        <div id="main">
+            <div id="content">
+                {% include 'appArticle/tags/article-list-content.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

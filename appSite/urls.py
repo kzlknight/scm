@@ -9,5 +9,6 @@ from django.urls import path,re_path
 from . import views
 
 urlpatterns = [
-    path('nav',views.NavModelView.as_view({'get':'list'}),name='nav')
+    # path('nav',views.NavModelView.as_view({'get':'list'}),name='nav'),
+    # path('login',views.LoginView.as_view(),name='login'),
 ]

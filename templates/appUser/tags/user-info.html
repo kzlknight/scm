@@ -1,0 +1,83 @@
+{% extends 'tags/detal-content.html' %}
+{% load tag_article %}
+
+{% block content %}
+    <style>
+        #main {
+            position: fixed;
+            width: 1135px;
+            display: block;
+            top: 75px;
+            bottom: 10px;
+            overflow: hidden;
+            left: 235px;
+        }
+    </style>
+
+    <div class="book-content" style="padding: 10px 100px 0 20px;">
+
+        <form action="/user/info" method="post" id="userinfo-form">
+            <div class="row mb-3">
+                <label for="account" class="col-sm-2 col-form-label">账号</label>
+                <div class="col-sm-10">
+                    <input value="{{ webUser.account }}" type="text" class="form-control" name="account" id="account"
+                           disabled="disabled">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="name" class="col-sm-2 col-form-label">昵称</label>
+                <div class="col-sm-10">
+                    <input value="{{ webUser.name }}" type="text" class="form-control" name="name" id="name">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="tel" class="col-sm-2 col-form-label">手机号</label>
+                <div class="col-sm-10">
+                    <input value="{{ webUser.tel }}" type="text" class="form-control" name="tel" id="tel">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="gender" class="col-sm-2 col-form-label">性别</label>
+
+                <div class="form-check form-check-inline">
+                    {{ webUser.gender }}
+                    <input {% if webUser.gender == 1 %}checked="checked"{% endif %} class="form-check-input"
+                           type="radio" name="gender" id="male"
+                           value="1">
+                    <label class="form-check-label" for="male">男</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input {% if webUser.gender == 1 %}checked="checked" {% endif %}class="form-check-input"
+                           type="radio" name="gender" id="female"
+                           value="0">
+                    <label class="form-check-label" for="female">女</label>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label" for="location">地点</label>
+                <div class="col-sm-10">
+                    <input value="{{ webUser.location }}" type="text" id="location" class="form-control"
+                           name="location">
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="introduction" class="col-sm-2 col-form-label">个人介绍</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" name="introduction" id="introduction"
+                              rows="5">{{ webUser.introduction }} </textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="display:block;width:150px;margin:auto;">修改</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('userinfo-form').onsubmit = function () {
+            alert('用户信息暂不支持修改，请联系管理员')
+            return false
+        }
+    </script>
+
+
+{% endblock %}
+
+

@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
+from django.views import static as view_static
 from django.conf import settings
 
 urlpatterns = [
@@ -24,6 +25,8 @@ urlpatterns = [
     path('', include('appArticle.urls', namespace='appArticle'), ),
     path('', include('appExpert.urls', namespace='appExpert'), ),
     path('', include('appOrg.urls', namespace='appOrg'), ),
+    path('', include('appSite.urls', namespace='appSite'), ),
+    path('', include('appUser.urls', namespace='appUser'), ),
 
     # path('api/appArticle/', include('appArticle.urls', namespace='appArticle'), ),
     # path('api/appExpert/', include('appExpert.urls', namespace='appExpert'), ),
@@ -32,14 +35,14 @@ urlpatterns = [
     # path('api/appUser/', include('appUser.urls', namespace='appUser'), ),
     # path('t/', include('appTest.urls', )), # 测试接口
     # path('', include('app_temp.tempUrls', namespace='app_temp')),
-
-
+    re_path(r'^static/(?P<path>.*)$', view_static.serve, {'document_root': settings.STATIC_ROOT}, name='static'),
+    re_path(r'^media/(?P<path>.*)$', view_static.serve, {'document_root': settings.MEDIA_ROOT}, name='media'),
 ]
 
-from appSite.views import page_not_found
-
-handler404 = page_not_found
+from appSite.views import page404
+handler404 = page404
 
 # mdeditor
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL,
+                                                                                          document_root=settings.STATIC_ROOT)

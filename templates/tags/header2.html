@@ -1,0 +1,186 @@
+{% load tag_site %}
+<style>
+
+    .navbar {
+        position: relative;
+        top: -5px;
+        height: 70px;
+        text-align: center;
+        width: 1300px;
+        margin: auto;
+    }
+
+    /*搜索下拉框*/
+    .my-search-select {
+        width: 80px;
+        margin-right: 5px;
+    }
+
+    /*搜索按钮*/
+    .my-search-button {
+        position: relative;
+        left: -10px;
+    }
+
+    /*搜索输入框*/
+    .my-search-input {
+        width: 180px;
+    }
+
+
+    /*点击后导航*/
+    .my-nav-active, .my-nav-active * {
+        color: #4B91EA !important;
+
+    }
+
+    .my-nav-active {
+        border-bottom: 2px solid #4B91EA;
+    }
+
+    .bg-blue {
+        background-color: #4B91EA;
+    }
+
+    .bg-blue * {
+        color: white;
+    }
+
+    .text-blue {
+        color: #4B91EA;
+    }
+    .text-black{
+        color: #222222;
+    }
+
+
+</style>
+<nav class="navbar navbar-expand navbar-light">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">
+                        <img src="/static/img/hanghangcha_logo.png" style="width: 80px;">
+                    </a>
+                </li>
+                {% for nav in navs %}
+                    {% if not nav.subNavs.all %}
+                        <li class="nav-item {% if nav.url in full_path %}my-nav-active{% endif %}">
+                            {#                        <li class="nav-item my-nav-active">#}
+                            <a class="nav-link" href="{{ nav.url }}">{{ nav.name }}</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item dropdown {{ nav | header_url_in_fullpaths:full_path }}">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ nav.id }}" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ nav.name }}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ nav.id }}">
+                                {% for subNav in nav.subNavs.all %}
+                                    <li><a class="dropdown-item" href="{{ subNav.url }}">{{ subNav.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+            <form class="d-flex">
+                <select class="form-select my-search-select">
+                    <option selected value="1">全文</option>
+                    <option value="2">标题</option>
+                </select>
+                <input class="form-control me-2 my-search-input" type="search" placeholder="" aria-label="Search">
+
+                <button class="btn my-search-button " type="submit" style="position:relative;left:-10px;"><i
+                        class="bi bi-search btn-outline-secondary"></i></button>
+            </form>
+            {% if webUser %}
+                <span class="d-flex">
+                    <span class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ webUser.name }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="/user/info">个人中心</a></li>
+                        <li><a class="dropdown-item" href="/logout">注销</a></li>
+                    </ul>
+                    </span>
+                </span>
+            {% else %}
+                <form class="d-flex">
+                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                            data-bs-target="#login_modal" id ="login-button">登录
+                    </button>
+                </form>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+
+<style>
+    .modal-backdrop {
+        z-index: 0;
+    }
+</style>
+<div class="modal fade" id="login_modal" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="login_header">
+                    <h5 class="modal-title text-center">登录</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" id="account" name="account" placeholder="账号">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="account" placeholder="密码">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" style="width: 100% !important;" id="login_button">登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('login_button').onclick = function () {
+        {#document.getElementById('login_form')#}
+        var account = document.getElementById('account').value;
+        var password = document.getElementById('password').value;
+        var csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+        console.log(csrfmiddlewaretoken)
+        if (account && password) {
+            $.post("/login", {
+                    account: account,
+                    password: password,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken,
+                },
+                function (data, status) {
+                    code = data['code'];
+                    if (code === true) {
+                        location.reload()
+                    } else {
+                        document.getElementById('login_header').innerHTML = '<p class="text-danger">用户名或密码错误</p>'
+                    }
+                });
+        } else {
+            document.getElementById('login_header').innerHTML = '<p class="text-danger">用户名和密码不能为空</p>'
+        }
+    }
+    {% if not showLogin == True %}
+        document.getElementById('login-button').click()
+    {% endif %}
+</script>
+

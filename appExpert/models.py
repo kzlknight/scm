@@ -127,7 +127,6 @@ class Expert(models.Model):
                     rule=rule,
                     searchNum=self.searchNum or rule.searchNum,
                 ) # [{index:"",title:"",url:""},]
-                print(searchDatas)
                 self.searchResult = datas_to_table(searchDatas) # 把搜索的结果变成markdown的table
                 self.searchDatetime = now()
             else: pass # 需要更新但为到更新时间

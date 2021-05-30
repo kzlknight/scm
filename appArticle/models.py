@@ -41,8 +41,8 @@ class ArticleAbstract(models.Model):
     brief = models.CharField(null=True, blank=True, max_length=255, verbose_name='简介')  # 所有种类的文章都应该有简介
     author = models.CharField(max_length=255, null=True, blank=True, verbose_name='作者')
     origin = models.CharField(max_length=255, null=True, blank=True, verbose_name='来源')
-    createDatetime = models.DateTimeField(auto_now_add=timezone.now(), verbose_name='创建时间')
-    publishDatetime = models.DateTimeField(auto_now_add=timezone.now(), verbose_name='发布时间')
+    createDatetime = models.DateTimeField(default=timezone.now(), verbose_name='创建时间')
+    publishDatetime = models.DateTimeField(default=timezone.now(),verbose_name='发布时间')
     clickNum = models.IntegerField(default=0, verbose_name='点击数量')
     collectNum = models.IntegerField(default=0, verbose_name='收藏数量')
     position = models.PositiveIntegerField(default=1, verbose_name='文章位置')
@@ -120,6 +120,10 @@ def upload_video(instance, filename):
     filename_new = random_filename(filename)
     return os.path.join('article_video', filename_new)
 
+def upload_audio(instace,filename):
+    filename_new = random_filename(filename)
+    return os.path.join('article_video', filename_new)
+
 
 class OutsideArticle(ArticleAbstract):
     class Meta():
@@ -131,7 +135,9 @@ class OutsideArticle(ArticleAbstract):
     def save(self, *args,**kwargs):
         if not self.id:
             models.Model.save(self,*args,**kwargs)
-        self.url = self.outlink
+        self.url = up.urljoin(
+            UM.ARTICLE_OUTSIDE, '?id={id}'.format(id=self.id)
+        )
         models.Model.save(self,*args,**kwargs)
 
 
@@ -156,6 +162,8 @@ class InsideArticle(ArticleAbstract):
     class Meta():
         verbose_name = verbose_name_plural = '3.2 内部文章详细'
 
+    video = models.FileField(upload_to=upload_video,null=True,blank=True,verbose_name='视频')
+    audio = models.FileField(upload_to=upload_audio,null=True,blank=True,verbose_name='音频')
     content = MDTextField(verbose_name='正文')
     category = models.ForeignKey(to='appArticle.InsideCategory',related_name='articles',on_delete=models.CASCADE,verbose_name='种类')
 
@@ -166,3 +174,27 @@ class InsideArticle(ArticleAbstract):
             UM.ARTICLE_INSIDE,'?id={id}'.format(id=self.id)
         )
         models.Model.save(self, *args, **kwargs)
+
+
+class NavLeft(models.Model):
+    class Meta():
+        verbose_name = verbose_name_plural = '4. 左侧导航'
+        ordering = ['level', 'position', ]
+
+    LEVEL_1 = 1  # 1级分类
+    LEVEL_2 = 2  # 2级分类
+
+    LEVEL_CHOICES = (
+        (LEVEL_1, '1级标题'),
+        (LEVEL_2, '2级标题')
+
+    )
+    name = models.CharField(max_length=255, verbose_name='名称')
+    position = models.PositiveSmallIntegerField(default=1, verbose_name='位置')
+    url = models.CharField(max_length=255, verbose_name='URL地址', null=True, blank=True)
+    level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES, default=LEVEL_1, verbose_name='标题级别')
+    superNav = models.ForeignKey(to='appArticle.NavLeft', related_name='subNavs', verbose_name='父标题', null=True, blank=True,
+                                 on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

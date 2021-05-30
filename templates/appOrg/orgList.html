@@ -1,0 +1,23 @@
+{% extends 'temp.html' %}
+
+{% load tag_site %}
+{% load tag_article %}
+{% load tag_org %}
+
+{% block title %}机构{% endblock %}
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+    <div id="article">
+        <div id="nav-left">
+            {% org_nav_left request %}
+        </div>
+        <div id="main">
+            <div id="content">
+                {% include 'appOrg/tags/org-list-content.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

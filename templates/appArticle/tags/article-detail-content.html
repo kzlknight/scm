@@ -1,0 +1,56 @@
+{% extends 'tags/detal-content.html' %}
+{% load tag_article %}
+
+{% block content %}
+    <div class="book-content">
+        <h1>{{ article.title }}</h1>
+        <div id="book-content-header">
+        <span>
+            发布时间：{{ article.publishDatetime|date:'Y-m-d' }}
+        </span>
+            <span>
+            行业：{{ article.keywords }}
+        </span>
+            <span>
+            <i class="bi bi-eye"></i>&nbsp;{{ article.clickNum }}
+        </span>
+            <span>
+            <i class="bi bi-star-fill is-collected"></i>收藏&nbsp;{{ article.collectNum }}
+        </span>
+            <p>简介：{{ article.brief }}</p>
+        </div>
+        {% if article.audio %}
+            <div>
+                <audio controls>
+                    <source src="/media/{{ article.audio }}" type="audio/mpeg">
+                    您的浏览器不支持，请使用新版本的谷歌浏览器播放
+                </audio>
+            </div>
+        {% endif %}
+        {% if article.video %}
+            <div>
+                <link href="https://vjs.zencdn.net/7.11.4/video-js.css" rel="stylesheet"/>
+                <video class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="264"
+                       data-setup="{}">
+                    <source src="/media/{{ article.video }}" type="video/mp4"/>
+                    <p>
+                        您的浏览器不支持，请使用新版本的谷歌浏览器播放
+                    </p>
+                </video>
+                <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
+            </div>
+        {% endif %}
+
+
+
+
+        {{ article.content|mark }}
+    </div>
+    <script>
+        var tables = document.getElementsByTagName('table');
+        for (var i = 0; i < tables.length; i++) {
+            tables[i].classList.add('table')
+            tables[i].classList.add('table-striped')
+        }
+    </script>
+{% endblock %}

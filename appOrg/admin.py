@@ -9,7 +9,9 @@ from aaBase.search import table_to_datas,datas_to_table
 @admin.register(Rule)
 class RuleAdmin(admin.ModelAdmin):
     # 展示内容
-    list_display = ['name', 'searchInterval', 'searchNum']
+    list_display = ['searchInterval','searchNum','title','content','brief','author','origin','keywords']
+    # 修改
+    list_editable = ['searchInterval','searchNum','title','content','brief','author','origin','keywords']
 
 class OrganizationForm(forms.ModelForm):
     class Meta():

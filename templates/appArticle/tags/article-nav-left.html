@@ -1,0 +1,21 @@
+{% extends 'tags/nav-left.html' %}
+
+
+{% block content %}
+    <ul class="list-group">
+        {% for navLeft1 in navLeft1s %}
+            <li class="list-group-item my-level1">
+                <i class="bi bi-book"></i> <a class="a-disable" href="#">{{ navLeft1.name }}</a>
+            </li>
+            {% for subNav in navLeft1.subNavs.all %}
+                {% if subNav.url in full_path %}
+                    <li class="list-group-item my-level2 choose">
+                        {% else %}
+                    <li class="list-group-item my-level2">
+                {% endif %}
+            <a href="{{ subNav.url }}">{{ subNav.name }}</a>
+            </li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endblock %}

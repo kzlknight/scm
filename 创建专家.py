@@ -19,7 +19,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-    from appSite.models import Nav
     from appExpert.models import Category, Expert
 
     expert_names = ['达青文', '种清懿', '弥代玉', '庆静云', '愚骏燕', '幸代蓝', '易绿竹', '盍春雪', '巴怀芹', '齐星', '抗又青', '旁悦人', '郁思柔', '牵熙',
@@ -76,75 +75,3 @@ if __name__ == '__main__':
                    category=category,
                    ).save()
 
-    #
-    # from appArticle.models import OutsideCategory, PDFCategory, InsideCategory
-    # from appArticle.models import OutsideArticle, PDFArticle, InsideArticle
-    # import json
-    #
-    # oc1 = OutsideCategory(name='外部文章1', keywordsTag=','.join(keywordstag1))
-    # oc2 = OutsideCategory(name='外部文章2', keywordsTag=','.join(keywordstag2))
-    # pc = PDFCategory(name='PDF文章', keywordsTag=','.join(keywordstag3))
-    # ic = InsideCategory(name='内部文章', keywordsTag=','.join(keywordstag4))
-    #
-    # oc1.save()
-    # oc2.save()
-    # pc.save()
-    # ic.save()
-    #
-    # navOut = Nav(name='外部文章', position=1, level=Nav.LEVEL_1)
-    # navOut.save()
-    #
-    # navOut1 = Nav(name='外部文章1', url=oc1.url, position=1, level=Nav.LEVEL_2, superNav=navOut)
-    # navOut2 = Nav(name='外部文章2', url=oc2.url, position=2, level=Nav.LEVEL_2, superNav=navOut)
-    # navOut1.save()
-    # navOut2.save()
-    #
-    # navPdf = Nav(name='PDF文章', url=pc.url, position=2, level=Nav.LEVEL_1)
-    # navInside = Nav(name='内部文章', url=ic.url, position=3, level=Nav.LEVEL_1)
-    # navPdf.save()
-    # navInside.save()
-    #
-    # out1_datas = json.load(open('spider/out1.json', 'r'))
-    # out2_datas = json.load(open('spider/out2.json', 'r'))
-    # pdf_datas = json.load(open('spider/pdf1.json', 'r'))
-    # in_datas = json.load(open('spider/inside1.json', 'r'))
-    #
-    # for data in out1_datas:
-    #     # data['outlink'] = data['href']
-    #     # del data['href']
-    #     try:
-    #         OutsideArticle(category=oc1, **data).save()
-    #         print('yes')
-    #     except:
-    #         print('no')
-    #
-    # for data in out2_datas:
-    #     # data['outlink'] = data['href']
-    #     # del data['href']
-    #     try:
-    #         OutsideArticle(category=oc2, **data).save()
-    #         print('yes')
-    #     except:
-    #         print('no')
-    #
-    # for data in pdf_datas:
-    #     del data['outlink']
-    #     try:
-    #         PDFArticle(
-    #             category=pc,
-    #             pdflink='article_pdf/0a5ec255-4607-42ba-8b67-7384e26f1d88.pdf',
-    #             **data).save()
-    #         print('yes pdf')
-    #     except:
-    #         print('no pdf')
-    #
-    # for data in in_datas:
-    #     del data['outlink']
-    #     try:
-    #         InsideArticle(
-    #             category=ic,
-    #             **data
-    #         ).save()
-    #         print('yes inside')
-    #     except:
-    #         print('no inside')

@@ -19,7 +19,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-    from appSite.models import Nav
     from appOrg.models import Organization
 
     names = ['北京大学', '交通大学', '黑龙江大学', '吉林大学', '辽宁大学', '东北大学', '哈尔滨工业大学', '同济大学', '交通大学', '南京大学', '清华大学', '同济大学',

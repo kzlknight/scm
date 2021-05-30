@@ -1,0 +1,23 @@
+{% extends 'temp.html' %}
+
+{% load tag_site %}
+{% load tag_article %}
+{% load tag_expert %}
+
+{% block title %}{{ expert.name }}{% endblock %}
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+    <div id="article">
+        <div id="nav-left">
+            {% include 'appExpert/tags/expert-nav-left.html' %}
+        </div>
+        <div id="main">
+            <div id="content">
+                {% include 'appExpert/tags/expert-detail-content.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

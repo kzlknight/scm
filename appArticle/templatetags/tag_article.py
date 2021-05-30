@@ -1,27 +1,17 @@
 from django.template import Library
-from appArticle.models import OutsideCategory,PDFCategory,InsideCategory
 from django.utils.html import format_html
-from appSite.models import NavLeft
+from appArticle.models import NavLeft
 import markdown
 
 register = Library()
 
-# @register.inclusion_tag('tag/article-nav-left.html')
-# def tag_articleNavLeft():
-#     outsideCategorys = OutsideCategory.objects.all()
-#     pdfsideCategorys = PDFCategory.objects.all()
-#     insideCategorys = InsideCategory.objects.all()
-#     print(outsideCategorys,pdfsideCategorys,insideCategorys)
-#     return dict(
-#         outsideCategorys = outsideCategorys,
-#         pdfsideCategorys = pdfsideCategorys,
-#         insideCategorys = insideCategorys
-#     )
 
-@register.inclusion_tag('tag/article-nav-left.html')
-def tag_ArticleNavLeft():
+@register.inclusion_tag('appArticle/tags/article-nav-left.html')
+def tag_ArticleNavLeft(request):
     navLeft1s = NavLeft.objects.filter(level=NavLeft.LEVEL_1)
-    return {'navLeft1s':navLeft1s}
+    full_path = request.get_full_path()
+    return {'navLeft1s': navLeft1s,'full_path':full_path}
+
 
 
 @register.filter
@@ -46,7 +36,7 @@ def mark(text):
         'markdown.extensions.toc',
         'markdown.extensions.wikilinks',
     ]
-    return format_html(markdown.markdown(text,extensions=extensions))
+    return format_html(markdown.markdown(text, extensions=extensions))
 
 
 @register.filter

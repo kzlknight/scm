@@ -1,0 +1,112 @@
+{% extends 'tags/list_content.html' %}
+
+
+<style>
+    .block {
+        display: block;
+    }
+
+    .color-blue {
+        color: #4B91EA;
+    }
+</style>
+
+{% block content %}
+    {% csrf_token %}
+    {% if articles %}
+
+    <table class="table table-borderless">
+        <tr class="text-center">
+            <th>标题</th>
+            <th>行业</th>
+            <th>发布时间</th>
+            <th>来源</th>
+            <th>收藏</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td class="text-left content-brief">
+                    <div class="block" style="width:555px;">
+                        <a href="{{ article.url }}">{{ article.title }} </a>
+                    </div>
+                </td>
+                <td class="text-left content-brief">
+                    <div class="block" style="width: 180px;">
+                        {{ article.keywords }}
+                    </div>
+                </td>
+                <td class="text-center content-brief">
+                    <div class="block" style="width: 150px;">
+                        {{ article.publishDatetime }}
+                    </div>
+                </td>
+                <td class="text-center content-brief">
+                    <div class="block" style="width: 100px;">
+                        {{ article.origin }}
+                    </div>
+                </td>
+                <td class="text-center content-brief">
+                    <div class="block" id="article-{{ article.id }}" style="width: 50px;">
+                        {% if article.id in collect_ids %}
+                            <a href="javascript:collect({{ article.id }},'delete')"> <i
+                                    class="bi bi-star-fill is-collected"></i> </a>
+                        {% else %}
+                            <a href="javascript:collect({{ article.id }},'add')">
+                                <i class="bi bi-star-fill no-collected"></i>
+                            </a>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+        {% include 'tags/pagination.html' %}
+    {% else %}
+        <p style="padding: 20px;font-size: 20px;"> 未找到搜索内容 </p>
+    {% endif %}
+    <script>
+        var csrfmiddlewaretoken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+        var collect = function (id, way) {
+            $.post('/collect', {
+                    id: id,
+                    csrfmiddlewaretoken: csrfmiddlewaretoken,
+                    way: way,
+                    category: '{{ category }}',
+                },
+                function (data, status) {
+                    code = data['code'];
+                    msg = data['msg'];
+                    console.log(code)
+                    if (code === true) {
+                        ret = data['ret']; /* add delete*/
+                        article_div = document.getElementById('article-' + id);
+                        if (ret === 'add') {
+                            a = article_div.getElementsByTagName('a')[0]
+                            a.setAttribute(
+                                'href', "javascript:collect("+id+",'delete')"
+                            )
+                            i = article_div.getElementsByTagName('i')[0]
+                            i.setAttribute(
+                                'class', 'bi bi-star-fill is-collected'
+                            )
+
+                        }
+                        if (ret === 'delete') {
+                            a = article_div.getElementsByTagName('a')[0]
+                            a.setAttribute(
+                                'href', "javascript:collect("+id+",'add')"
+                            )
+                            i = article_div.getElementsByTagName('i')[0]
+                            i.setAttribute(
+                                'class', 'bi bi-star-fill no-collected'
+                            )
+                        }
+                    } else {
+                        alert(msg);
+                    }
+
+                });
+        }
+    </script>
+{% endblock %}
+

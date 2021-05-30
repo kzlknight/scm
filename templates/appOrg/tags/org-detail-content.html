@@ -1,0 +1,32 @@
+{% extends 'tags/detal-content.html' %}
+
+{% load tag_article %}
+{% load tag_org %}
+
+{% block content %}
+    <div class="book-content">
+        <h1 style="margin-bottom: 30px;">{{ org.name }}</h1>
+        <div>
+            <span style="margin:20px 0;border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">机构简介：</span>
+            <p style="margin: 20px 0;">{{ org.brief }}</p>
+        </div>
+        <div>
+            <span style="margin:30px 0; border-left: 4px solid #4B91EA; padding-left:5px; font-weight: bold;">相关文章：</span>
+            <ol class="list-group list-group-flush">
+                {% for data in org.searchResult|table_to_datas:1000 %}
+                    <li class="list-group-item content-brief">
+                        <a href="{{ data.url }}"> {{ data.index }}.{{ data.title }} </a>
+                    </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        var tables = document.getElementsByTagName('table');
+        for (var i = 0; i < tables.length; i++) {
+            tables[i].classList.add('table')
+            tables[i].classList.add('table-striped')
+        }
+    </script>
+{% endblock %}

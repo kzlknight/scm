@@ -17,7 +17,7 @@ body {
 }
 
 /*模块拆分*/
-#header, #nav-left, #nav-top, #content {
+#header, #nav-left, #nav-top, #content ,#main{
     background-color: #FFFFFF;
 }
 
@@ -71,4 +71,14 @@ a {
     color: #69727A;
 }
 
+.content-brief {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
+}
+
+a{
+    text-decoration: none;
+    color: #222222 !important;
+}

@@ -1,0 +1,24 @@
+{% extends 'temp.html' %}
+
+{% load tag_site %}
+{% load tag_article %}
+
+{% block title %}{{ article.title }}{% endblock %}
+
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+
+    <div id="article">
+        <div id="nav-left">
+            {% tag_ArticleNavLeft request %}
+        </div>
+        <div id="main">
+            <div id="content">
+                {% include 'appArticle/tags/article-detail-content.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

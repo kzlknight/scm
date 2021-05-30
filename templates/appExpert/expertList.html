@@ -1,0 +1,28 @@
+{% extends 'temp.html' %}
+{% load tag_site %}
+{% load tag_article %}
+{% load tag_expert %}
+
+{% block title %}专家{% endblock %}
+
+{% block body %}
+    <div id="header">
+        {% tag_header request %}
+    </div>
+
+    <div id="article">
+        <div id="nav-left">
+            {% include 'appExpert/tags/expert-nav-left.html' %}
+        </div>
+        <div id="main">
+            <div id="nav-top">
+                {{ this_category.brief }}
+            </div>
+            <div style="display: block;background-color: rgba(248, 248, 249, 1);height: 10px;"></div>
+            <div id="content">
+                {% include 'appExpert/tags/expert-list-content.html' %}
+                {% include 'tags/pagination.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

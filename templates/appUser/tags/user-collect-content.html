@@ -1,0 +1,28 @@
+{% extends 'tags/list_content.html' %}
+
+{% block content %}
+    <table class="table table-borderless">
+        <tr class="text-center">
+            <th>文章</th>
+            <th>简介</th>
+        </tr>
+        {% for article in articles %}
+            <tr>
+                <td class="text-left">
+                    <div class="content-brief block" style="width: 400px;">
+                        <a href="{{ article.url }}">{{ article.title }}</a>
+                    </div>
+                </td>
+                <td class="text-left">
+                    <div class="content-brief block" style="width: 635px;">
+                        {{ article.brief }}
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+
+    </table>
+
+{#    {% include 'tags/pagination.html' %}#}
+
+{% endblock %}
